@@ -3,9 +3,12 @@
 var date = (new Date()).toJSON();
 
 const http = require('http')
+  , url = require('url')
   , URLS = [
-  	  '/api/v1'
-  	, '/api/v2'
+  	  '/api/pokemons/create'
+  	, '/api/pokemons/read'
+  	, '/api/pokemons/update'
+  	, '/api/pokemons/delete'
   ]
   , SUCCESS = {
   		version: '1.0'
@@ -17,12 +20,13 @@ const http = require('http')
   };
 
 var server = http.createServer(function(req, res){
-	console.log(URLS.indexOf(req.url));
-	if( URLS.indexOf(req.url) >= 0){
+	var parsedURL = url.parse(req.url, true);
+
+	if( URLS.indexOf(parsedURL.pathname) >= 0){
 		res.writeHead(200, {"Content-Type": "text/json"});
 		res.write( JSON.stringify(SUCCESS));
 	} else {
-		res.writeHead(400, {"Content-Type": "text/json; charset=utf-8"});
+		res.writeHead(404, {"Content-Type": "text/json; charset=utf-8"});
 		res.write( JSON.stringify(ERROR));
 	}
 	res.end();
