@@ -1,4 +1,4 @@
- 'use strict';
+'use strict';
 
 var date = (new Date()).toJSON();
 
@@ -19,8 +19,8 @@ const http = require('http')
   		message: "Não encontrado"
   };
 
-var server = http.createServer(function(req, res){
-	var parsedURL = url.parse(req.url, true);
+const server = http.createServer((req, res) => {
+	let parsedURL = url.parse(req.url, true);
 
 	if( URLS.indexOf(parsedURL.pathname) >= 0){
 		res.writeHead(200, {"Content-Type": "text/json"});
@@ -32,6 +32,4 @@ var server = http.createServer(function(req, res){
 	res.end();
 });
 
-server.listen(3000, function(){
-	console.log('Server up');
-});
+server.listen(3000, () => console.log('Server up') );
